@@ -34,7 +34,7 @@ const getAllItems = list_param => {
       setItemList(JSON.parse(value));
     }
   });
-  return itemList;
+  return itemList.sort(sortList);
 };
 
 const addItemToList = (item, list_param) => {
@@ -43,19 +43,58 @@ const addItemToList = (item, list_param) => {
   stringified_items.then(value => {
     let string_list;
     if (value == null) {
-      let new_list = [item];
+      let new_list = [{name: item, is_selected: true}];
       string_list = JSON.stringify(new_list);
     } else {
-      let itemList = JSON.parse(value);
-      itemList.push(item);
-      string_list = JSON.stringify(itemList);
+      let already_in = JSON.parse(value).find(obj => {
+        return obj.name === item;
+      });
+      if (!already_in) {
+        let itemList = JSON.parse(value);
+        itemList.push({name: item, is_selected: true});
+        string_list = JSON.stringify(itemList);
+      }
     }
     let store_promise = storeData(list_param, string_list);
     store_promise.then(() => {});
   });
 };
 
+const modifyItemState = (item, list_param) => {
+  let stringified_items = retrieveData(list_param);
+  stringified_items.then(value => {
+    if (value != null) {
+      let already_in = JSON.parse(value).find(obj => {
+        return obj.name === item;
+      });
+      if (already_in) {
+        already_in.is_selected = !already_in.is_selected;
+        let filtered_list = JSON.parse(value).filter(obj => {
+          return obj.name !== item;
+        });
+        filtered_list.push(already_in);
+        let string_list = JSON.stringify(filtered_list);
+        let store_promise = storeData(list_param, string_list);
+        store_promise.then(() => {});
+      }
+    }
+  });
+};
+
+const sortList = (a,b) => {
+  let textA = a.name.toUpperCase();
+  let textB = b.name.toUpperCase();
+  return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+}
+
 const ITEM_LIST = 'item_list';
 const GROCERY_LIST = 'grocery_list';
 
-export {getAllItems, addItemToList, deleteData, ITEM_LIST, GROCERY_LIST};
+export {
+  getAllItems,
+  addItemToList,
+  deleteData,
+  modifyItemState,
+  ITEM_LIST,
+  GROCERY_LIST,
+};

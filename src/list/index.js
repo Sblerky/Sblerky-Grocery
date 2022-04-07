@@ -7,14 +7,20 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {getAllItems, addItemToList, ITEM_LIST} from '../utils';
+import {getAllItems, addItemToList, modifyItemState, ITEM_LIST} from '../utils';
 import styles from '../style';
 
 const ListItem = props => {
-  const [isSelected, setSelection] = useState(false);
+  const [isSelected, setSelection] = useState(props.isSelected);
   return (
     <View style={styles.list_item_view}>
-      <CheckBox value={isSelected} onValueChange={setSelection} />
+      <CheckBox
+        value={isSelected}
+        onValueChange={() => {
+          modifyItemState(props.name, ITEM_LIST);
+          setSelection(!isSelected);
+        }}
+      />
       <Text>{props.name}</Text>
     </View>
   );
@@ -25,7 +31,9 @@ const ItemList = ({navigation, route}) => {
     <View style={styles.list_view}>
       <FlatList
         data={getAllItems(ITEM_LIST)}
-        renderItem={({item}) => <ListItem name={item} />}
+        renderItem={({item}) => (
+          <ListItem name={item.name} isSelected={item.is_selected} />
+        )}
         contentContainerStyle={styles.list_flatlist}
       />
       <KeyboardAvoidingView style={styles.list_item_keyboard}>
