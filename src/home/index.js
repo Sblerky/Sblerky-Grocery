@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, Text, View, Button} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {getAllItems, ITEM_LIST} from '../utils';
-
+import {getAllItems, unselectAllItems, ITEM_LIST} from '../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,10 +38,8 @@ const GroceryList = ({navigation}) => {
         })}
         renderItem={({item}) => <GroceryItem name={item.name} />}
       />
-      <Button
-        title="+"
-        onPress={() => navigation.navigate('List')}
-      />
+      <Button title="+" onPress={() => navigation.navigate('List')} />
+      <Button title="-" onPress={() => unselectAllItems(ITEM_LIST)} />
     </View>
   );
 };

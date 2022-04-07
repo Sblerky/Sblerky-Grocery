@@ -9,14 +9,6 @@ const storeData = async (key, value) => {
   }
 };
 
-const deleteData = async key => {
-  try {
-    await AsyncStorage.removeItem(key);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const retrieveData = async key => {
   try {
     const value = await AsyncStorage.getItem(key);
@@ -81,11 +73,45 @@ const modifyItemState = (item, list_param) => {
   });
 };
 
-const sortList = (a,b) => {
+const deleteItemFromList = (item, list_param) => {
+  let stringified_items = retrieveData(list_param);
+  stringified_items.then(value => {
+    if (value != null) {
+      let already_in = JSON.parse(value).find(obj => {
+        return obj.name === item;
+      });
+      if (already_in) {
+        let filtered_list = JSON.parse(value).filter(obj => {
+          return obj.name !== item;
+        });
+        let string_list = JSON.stringify(filtered_list);
+        let store_promise = storeData(list_param, string_list);
+        store_promise.then(() => {});
+      }
+    }
+  });
+};
+
+const unselectAllItems = list_param => {
+  let stringified_items = retrieveData(list_param);
+  stringified_items.then(value => {
+    if (value != null) {
+      let item_list = JSON.parse(value);
+      item_list.forEach(obj => {
+        obj.is_selected = false;
+      });
+      let string_list = JSON.stringify(item_list);
+      let store_promise = storeData(list_param, string_list);
+      store_promise.then(() => {});
+    }
+  });
+};
+
+const sortList = (a, b) => {
   let textA = a.name.toUpperCase();
   let textB = b.name.toUpperCase();
-  return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-}
+  return textA < textB ? -1 : textA > textB ? 1 : 0;
+};
 
 const ITEM_LIST = 'item_list';
 const GROCERY_LIST = 'grocery_list';
@@ -93,8 +119,9 @@ const GROCERY_LIST = 'grocery_list';
 export {
   getAllItems,
   addItemToList,
-  deleteData,
   modifyItemState,
+  deleteItemFromList,
+  unselectAllItems,
   ITEM_LIST,
   GROCERY_LIST,
 };

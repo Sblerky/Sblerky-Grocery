@@ -5,9 +5,16 @@ import {
   Text,
   View,
   KeyboardAvoidingView,
+  Button,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {getAllItems, addItemToList, modifyItemState, ITEM_LIST} from '../utils';
+import {
+  getAllItems,
+  addItemToList,
+  modifyItemState,
+  deleteItemFromList,
+  ITEM_LIST,
+} from '../utils';
 import styles from '../style';
 
 const ListItem = props => {
@@ -22,6 +29,13 @@ const ListItem = props => {
         }}
       />
       <Text>{props.name}</Text>
+      <Button
+        onPress={() => {
+          deleteItemFromList(props.name, ITEM_LIST);
+        }}
+        title="X"
+        color="#841584"
+      />
     </View>
   );
 };
