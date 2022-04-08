@@ -13,12 +13,30 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={GroceryList}
-          options={{title: 'Liste de course'}}
+          options={{
+            title: 'Liste de course',
+            headerStyle: {
+              backgroundColor: '#282b2e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
         />
         <Stack.Screen
           name="List"
           component={ItemList}
-          options={{title: 'Articles ajoutés'}}
+          options={{
+            title: 'Articles ajoutés',
+            headerStyle: {
+              backgroundColor: '#282b2e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

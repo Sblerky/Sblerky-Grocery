@@ -5,7 +5,7 @@ import {
   Text,
   View,
   KeyboardAvoidingView,
-  Button,
+  Pressable,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import {
@@ -27,15 +27,16 @@ const ListItem = props => {
           modifyItemState(props.name, ITEM_LIST);
           setSelection(!isSelected);
         }}
+        tintColors={{true: '#5662f6', false: '#b8babe'}}
       />
-      <Text>{props.name}</Text>
-      <Button
+      <Text style={styles.list_item_text}>{props.name}</Text>
+      <Pressable
         onPress={() => {
           deleteItemFromList(props.name, ITEM_LIST);
         }}
-        title="X"
-        color="#841584"
-      />
+        style={styles.list_item_button}>
+        <Text style={styles.list_item_button_text}>X</Text>
+      </Pressable>
     </View>
   );
 };
@@ -53,6 +54,7 @@ const ItemList = ({navigation, route}) => {
       <KeyboardAvoidingView style={styles.list_item_keyboard}>
         <TextInput
           placeholder="Nouvel article..."
+          placeholderTextColor="#6d7078"
           onSubmitEditing={event => {
             event.nativeEvent.text !== '' &&
               addItemToList(event.nativeEvent.text, ITEM_LIST);
