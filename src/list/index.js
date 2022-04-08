@@ -42,6 +42,7 @@ const ListItem = props => {
 };
 
 const ItemList = ({navigation, route}) => {
+  const [textInput, setTextInput] = useState('');
   return (
     <View style={styles.list_view}>
       <FlatList
@@ -56,10 +57,14 @@ const ItemList = ({navigation, route}) => {
           placeholder="Nouvel article..."
           placeholderTextColor="#6d7078"
           onSubmitEditing={event => {
-            event.nativeEvent.text !== '' &&
+            if (event.nativeEvent.text !== '') {
               addItemToList(event.nativeEvent.text, ITEM_LIST);
+              setTextInput('');
+            }
           }}
           style={styles.list_item_input}
+          value={textInput}
+          onChangeText={setTextInput}
         />
       </KeyboardAvoidingView>
     </View>

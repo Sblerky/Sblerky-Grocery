@@ -37,6 +37,8 @@ const addItemToList = (item, list_param) => {
     if (value == null) {
       let new_list = [{name: item, is_selected: true}];
       string_list = JSON.stringify(new_list);
+      let store_promise = storeData(list_param, string_list);
+      store_promise.then(() => {});
     } else {
       let already_in = JSON.parse(value).find(obj => {
         return obj.name === item;
@@ -45,10 +47,10 @@ const addItemToList = (item, list_param) => {
         let itemList = JSON.parse(value);
         itemList.push({name: item, is_selected: true});
         string_list = JSON.stringify(itemList);
+        let store_promise = storeData(list_param, string_list);
+        store_promise.then(() => {});
       }
     }
-    let store_promise = storeData(list_param, string_list);
-    store_promise.then(() => {});
   });
 };
 
