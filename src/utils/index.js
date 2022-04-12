@@ -116,7 +116,6 @@ const sortList = (a, b) => {
 };
 
 const ITEM_LIST = 'item_list';
-const GROCERY_LIST = 'grocery_list';
 
 export {
   getAllItems,
@@ -125,5 +124,4 @@ export {
   deleteItemFromList,
   unselectAllItems,
   ITEM_LIST,
-  GROCERY_LIST,
 };

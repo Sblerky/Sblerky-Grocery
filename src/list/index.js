@@ -21,14 +21,17 @@ const ListItem = props => {
   const [isSelected, setSelection] = useState(props.isSelected);
   return (
     <View style={styles.list_item_view}>
-      <CheckBox
-        value={isSelected}
-        onValueChange={() => {
+      <Pressable
+        onPress={() => {
           modifyItemState(props.name, ITEM_LIST);
           setSelection(!isSelected);
         }}
-        tintColors={{true: '#5662f6', false: '#b8babe'}}
-      />
+        style={styles.list_item_checkbox}>
+        <Text style={styles.list_item_text_checkbox}>
+          {props.isSelected ? '✅' : '❌'}
+        </Text>
+      </Pressable>
+
       <Text style={styles.list_item_text}>{props.name}</Text>
       <Pressable
         onPress={() => {

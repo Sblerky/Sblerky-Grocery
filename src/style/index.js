@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%',
     paddingLeft: '5%',
     marginTop: '5%',
+    height: 30,
   },
   list_item_input: {
     backgroundColor: '#41454b',
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   list_item_button_text: {
     color: 'white',
     alignSelf: 'center',
-    paddingTop: '15%',
+    paddingTop: '10%',
     fontWeight: 'bold',
   },
   home_add_button: {
@@ -82,6 +83,14 @@ const styles = StyleSheet.create({
     paddingLeft: '4%',
     fontWeight: 'bold',
     textDecorationLine: 'line-through',
+  },
+  list_item_checkbox: {
+    height: '100%',
+    paddingTop: '2%',
+  },
+  list_item_text_checkbox: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
