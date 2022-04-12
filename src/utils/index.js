@@ -24,6 +24,9 @@ const getAllItems = list_param => {
   stringified_items.then(value => {
     if (value != null) {
       setItemList(JSON.parse(value));
+    } else {
+      console.log('empty');
+      setItemList([{name: 'Ajoute un item !', is_selected: true}]);
     }
   });
   return itemList.sort(sortList);
